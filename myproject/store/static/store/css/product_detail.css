@@ -1,0 +1,249 @@
+/* Product Detail Page Styles */
+.product-detail-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.product-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    margin-bottom: 60px;
+}
+
+/* Product Image */
+.product-image {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    background: white;
+    padding: 30px;
+}
+
+.no-image {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px dashed var(--border-color);
+}
+
+/* Product Info Section */
+.product-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.product-info-section h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.product-meta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.category-badge {
+    background: rgba(255, 59, 48, 0.1);
+    color: var(--brand-primary);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.stock-status {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    background: #ecfdf5;
+    color: var(--accent-green);
+}
+
+.stock-status.low-stock {
+    background: #fff7ed;
+    color: #f59e0b;
+}
+
+.stock-status.out-of-stock {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.price-section {
+    margin: 20px 0;
+}
+
+.price {
+    font-size: 48px;
+    font-weight: 900;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    padding: 25px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--brand-primary);
+}
+
+.description h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.description p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.action-buttons .btn {
+    flex: 1;
+    padding: 18px 30px;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.btn-large {
+    font-size: 18px;
+    padding: 20px 35px;
+}
+
+/* Product Specs */
+.product-specs {
+    margin-top: 30px;
+    padding: 25px;
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-color);
+}
+
+.product-specs h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.product-specs ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.product-specs li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.product-specs li:last-child {
+    border-bottom: none;
+}
+
+.product-specs strong {
+    color: var(--text-primary);
+    margin-right: 8px;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .product-detail-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .product-image {
+        position: static;
+    }
+
+    .product-image img {
+        max-height: 500px;
+    }
+
+    .product-info-section h1 {
+        font-size: 32px;
+    }
+
+    .price {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 640px) {
+    .product-detail-container {
+        padding: 0 15px;
+    }
+
+    .product-image img {
+        max-height: 400px;
+        padding: 20px;
+    }
+
+    .product-info-section h1 {
+        font-size: 26px;
+    }
+
+    .price {
+        font-size: 32px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+}

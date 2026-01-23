@@ -1,0 +1,159 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-container">
+
+    <!-- Hero Banner Carousel -->
+    <div class="banner-carousel">
+        <div class="banner-slides">
+            <div class="banner-slide active">
+                <img src="{% static 'store/images/Banner (5).png' %}" alt="Welcome to RISE">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Welcome to RISE</h1>
+                    <p class="banner-subtitle">Premium Shoes • Premium Style • Premium Comfort</p>
+                    <a href="#products" class="btn btn-primary banner-btn">Shop Now</a>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="{% static 'store/images/Banner (1).png' %}" alt="New Collection">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">New Collection</h1>
+                    <p class="banner-subtitle">Discover the latest trends in footwear</p>
+                    <a href="#products" class="btn btn-primary banner-btn">Explore Now</a>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="{% static 'store/images/Banner (2).png' %}" alt="Step Up Your Game">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Step Up Your Game</h1>
+                    <p class="banner-subtitle">Performance meets style</p>
+                    <a href="#products" class="btn btn-primary banner-btn">View Collection</a>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="{% static 'store/images/Banner (3).png' %}" alt="Summer Vibes">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Summer Vibes</h1>
+                    <p class="banner-subtitle">Get ready for the season</p>
+                    <a href="#products" class="btn btn-primary banner-btn">Shop Summer</a>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="{% static 'store/images/Banner (4).png' %}" alt="Exclusive Deals">
+                <div class="banner-overlay">
+                    <h1 class="banner-title">Exclusive Deals</h1>
+                    <p class="banner-subtitle">Limited time offers you can't miss</p>
+                    <a href="#products" class="btn btn-primary banner-btn">Grab Yours</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="banner-dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="banner-prev" onclick="changeSlide(-1)">❮</button>
+        <button class="banner-next" onclick="changeSlide(1)">❯</button>
+    </div>
+
+    <!-- Products Section -->
+    <div id="products">
+        <h2 class="section-title">🔥 Trending Products</h2>
+
+        {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.slug %}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+                </a>
+
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">₹{{ product.price }}</p>
+
+                    <div class="product-buttons">
+                        <a class="btn btn-outline" href="{% url 'product_detail' product.slug %}">
+                            View Details
+                        </a>
+
+                        <a class="btn btn-primary" href="{% url 'cart:cart_add' product.id %}">
+                            Add to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>No products available at the moment.</p>
+            <p style="color: var(--text-muted); font-size: 14px;">Check back soon for new arrivals!</p>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- Banner Carousel Script -->
+<script>
+    let currentSlideIndex = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.banner-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        if (index >= slides.length) currentSlideIndex = 0;
+        if (index < 0) currentSlideIndex = slides.length - 1;
+
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        slides[currentSlideIndex].classList.add('active');
+        dots[currentSlideIndex].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+        currentSlideIndex += direction;
+        showSlide(currentSlideIndex);
+        resetInterval();
+    }
+
+    function currentSlide(index) {
+        currentSlideIndex = index;
+        showSlide(currentSlideIndex);
+        resetInterval();
+    }
+
+    function autoSlide() {
+        currentSlideIndex++;
+        showSlide(currentSlideIndex);
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(autoSlide, 5000);
+    }
+
+    // Auto-play carousel
+    slideInterval = setInterval(autoSlide, 5000);
+
+    // Pause on hover
+    document.querySelector('.banner-carousel').addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+
+    document.querySelector('.banner-carousel').addEventListener('mouseleave', () => {
+        slideInterval = setInterval(autoSlide, 5000);
+    });
+</script>
+
+{% endblock %}

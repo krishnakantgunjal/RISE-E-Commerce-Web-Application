@@ -1,0 +1,250 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+
+    <div class="cart-header">
+        <h1>✅ Checkout</h1>
+        <p>Complete your order details</p>
+    </div>
+
+    <div class="cart-content">
+        <!-- Order Summary -->
+        <div class="cart-items">
+            <div class="checkout-form">
+                <h2>📦 Order Summary</h2>
+
+                {% for item in cart_items %}
+                <div class="cart-item" style="margin-bottom: 16px;">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item-image">
+
+                    <div class="cart-item-details">
+                        <h3>{{ item.product.name }}</h3>
+                        <div class="cart-item-price">₹{{ item.price }}</div>
+                        <div class="cart-item-quantity"
+                            style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                            Quantity:
+                            <a href="{% url 'cart:cart_decrement' item.product.id %}"
+                                onclick="updateQuantity(event, this.href, {{ item.product.id }})"
+                                style="text-decoration: none; width: 24px; height: 24px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #333; font-weight: bold;">-</a>
+                            <span id="qty-{{ item.product.id }}" style="min-width: 20px; text-align: center;">{{
+                                item.quantity }}</span>
+                            <a href="{% url 'cart:cart_add' item.product.id %}"
+                                onclick="updateQuantity(event, this.href, {{ item.product.id }})"
+                                style="text-decoration: none; width: 24px; height: 24px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #333; font-weight: bold;">+</a>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-actions">
+                        <div class="cart-item-total" id="subtotal-{{ item.product.id }}">₹{{ item.subtotal }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="summary-row total"
+                    style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                    <span class="summary-label">Total Amount</span>
+                    <span class="summary-value" id="cart-total-amount">₹{{ total }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Form - Updated to Detailed Address Form -->
+        <div class="cart-summary" style="flex: 1.5;">
+            <h2 style="margin-bottom: 20px;">Enter a new delivery address</h2>
+
+            <!-- Autofill Banner -->
+            <div
+                style="background: #e7f3ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 8px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 600; color: #1565c0;">Save time. Autofill your current location.</span>
+                <button type="button" onclick="autofillLocation()" class="btn btn-outline"
+                    style="padding: 6px 16px; font-size: 14px; background: white;">Autofill</button>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="country">Country/Region</label>
+                    <select id="country" name="country" class="form-select" style="background: #f8f9fa;">
+                        <option value="India" selected>India</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="full_name">Full name (First and Last name)</label>
+                    <input type="text" id="full_name" name="full_name" value="{{ user.get_full_name|default:'' }}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="{{ user.email|default:'' }}"
+                        placeholder="For order confirmation" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Mobile number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number"
+                        value="{{ user_profile.phone|default:'' }}" required>
+                    <small style="color: var(--text-muted); font-size: 12px;">May be used to assist delivery</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" id="pincode" name="pincode" placeholder="6 digits [0-9] PIN code"
+                        pattern="[0-9]{6}" value="{{ user_profile.pincode|default:'' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address_line1">Flat, House no., Building, Company, Apartment</label>
+                    <input type="text" id="address_line1" name="address_line1"
+                        value="{{ user_profile.address_line1|default:'' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address_line2">Area, Street, Sector, Village</label>
+                    <input type="text" id="address_line2" name="address_line2"
+                        value="{{ user_profile.address_line2|default:'' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="landmark">Landmark</label>
+                    <input type="text" id="landmark" name="landmark" placeholder="E.g. near apollo hospital"
+                        value="{{ user_profile.landmark|default:'' }}">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label for="city">Town/City</label>
+                        <input type="text" id="city" name="city" value="{{ user_profile.city|default:'' }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state" required>
+                            <option value="">Choose a state</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-check" style="margin: 15px 0;">
+                    <input type="checkbox" id="default_address" name="default_address" checked>
+                    <label for="default_address" style="display: inline; font-weight: normal; margin-left: 8px;">Make
+                        this my default address</label>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary checkout-btn"
+                        style="background: #ffd814; border-color: #fcd200; color: #111;">
+                        Use this address
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    {% if user_profile.state %}
+    if (document.getElementById('state')) {
+        document.getElementById('state').value = "{{ user_profile.state }}";
+    }
+    {% endif %}
+
+    function updateQuantity(event, url, productId) {
+        event.preventDefault();
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (data.removed) {
+                        location.reload();
+                    } else {
+                        // Update Quantity
+                        const qtyEl = document.getElementById('qty-' + productId);
+                        if (qtyEl) qtyEl.innerText = data.quantity;
+
+                        // Update Subtotal (if element exists)
+                        const subtotalEl = document.getElementById('subtotal-' + productId);
+                        if (subtotalEl && data.subtotal) subtotalEl.innerText = '₹' + data.subtotal.toFixed(1);
+
+                        // Update Total
+                        const totalEl = document.getElementById('cart-total-amount');
+                        if (totalEl) totalEl.innerText = '₹' + data.total_amount.toFixed(1);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => console.error('Error:', err));
+    }
+
+    function autofillLocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                // Mock implementation - usually requires Google Maps API to get address from lat/long
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                // Fill with demo data since we don't have an API key
+                document.getElementById('city').value = "Detected City";
+                document.getElementById('pincode').value = "400001";
+                document.getElementById('state').value = "Maharashtra";
+
+                alert("Location Detected! (Mock Data Filled - Real address requires API Key)");
+            }, function (error) {
+                alert("Error getting location: " + error.message);
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
+</script>
+
+<style>
+    /* Styling adjustments for the granular form */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #888;
+        border-radius: 4px;
+        font-size: 14px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .form-group input:focus {
+        border-color: #e77600;
+        box-shadow: 0 0 3px 2px rgba(228, 121, 17, 0.5);
+        outline: none;
+    }
+</style>
+{% endblock %}

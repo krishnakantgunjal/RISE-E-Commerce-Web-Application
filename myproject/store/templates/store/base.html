@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise</title>
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{% static 'store/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/product_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <img src="{% static 'store/images/logo.png' %}" alt="Rise Logo" class="logo">
+            <span class="brand-name">RISE</span>
+        </a>
+
+
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}">🏠 Home</a>
+            <a href="{% url 'cart:cart_detail' %}">🛒 Cart</a>
+            <a href="{% url 'orders:my_orders' %}">📦 Orders</a>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'accounts:wishlist' %}">💝 Wishlist</a>
+            <a href="{% url 'accounts:profile' %}">👤 {{ user.first_name|default:user.username }}</a>
+            <a href="{% url 'accounts:logout' %}" class="btn-logout">Logout</a>
+            {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn-login">Login</a>
+            <a href="{% url 'accounts:register' %}" class="btn-register">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }} animate-slide-in">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()" class="close-btn">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Page Content -->
+    <div class="main-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

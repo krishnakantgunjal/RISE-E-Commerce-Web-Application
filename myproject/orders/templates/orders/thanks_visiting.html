@@ -1,0 +1,86 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+    <div class="checkout-form" style="max-width: 800px; margin: 50px auto; padding: 40px; text-align: center;">
+
+        <!-- Thank You Header -->
+        <h1 style="color: var(--brand-primary); font-size: 32px; font-weight: 800; margin-bottom: 20px;">
+            Thank You for Visiting!
+        </h1>
+
+        <div
+            style="width: 60px; height: 4px; background: var(--brand-gradient); margin: 0 auto 30px; border-radius: 2px;">
+        </div>
+
+        <!-- Main Content -->
+        <div style="text-align: left; line-height: 1.8; color: var(--text-primary); font-size: 16px;">
+
+            <p style="margin-bottom: 20px;">
+                Thank you for visiting our website and completing the order process.
+            </p>
+
+            <p style="margin-bottom: 20px;">
+                We sincerely appreciate your time and interest in exploring this project. This platform has been
+                developed to demonstrate the working of a modern e-commerce system, including product browsing, cart
+                management, order placement, and the payment workflow.
+            </p>
+
+            <!-- Important Note Box -->
+            <div
+                style="background: #f8fafc; border-left: 4px solid var(--brand-primary); padding: 20px; border-radius: 4px; margin: 30px 0;">
+                <p style="margin-bottom: 15px; font-weight: 600;">Please note:</p>
+                <p style="margin-bottom: 0;">
+                    This is a demonstration payment system created strictly for academic and portfolio purposes.
+                    <strong>No real payment is being processed on this page.</strong> All payment-related actions shown
+                    here are simulated to explain how a real-world payment flow operates within an e-commerce
+                    application.
+                </p>
+            </div>
+
+            <p style="margin-bottom: 20px;">
+                In a production environment, this system can be securely integrated with industry-standard payment
+                solutions such as:
+            </p>
+
+            <ul
+                style="list-style-type: none; padding-left: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 30px;">
+                <li style="display: flex; align-items: center;"><span
+                        style="color: var(--accent-green); margin-right: 8px;">✓</span> Razorpay Payment Gateway</li>
+                <li style="display: flex; align-items: center;"><span
+                        style="color: var(--accent-green); margin-right: 8px;">✓</span> PayU / Paytm Integration</li>
+                <li style="display: flex; align-items: center;"><span
+                        style="color: var(--accent-green); margin-right: 8px;">✓</span> UPI Payment Processing</li>
+                <li style="display: flex; align-items: center;"><span
+                        style="color: var(--accent-green); margin-right: 8px;">✓</span> Credit/Debit Card Processing
+                </li>
+                <li style="display: flex; align-items: center;"><span
+                        style="color: var(--accent-green); margin-right: 8px;">✓</span> Real-time Verification</li>
+            </ul>
+
+            <!-- Payment Completion Button -->
+            <form method="POST" action="{% url 'orders:process_payment' order_id %}"
+                style="text-align: center; margin: 40px 0;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary"
+                    style="font-size: 18px; padding: 16px 48px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+                    ✓ I Have Completed Payment
+                </button>
+            </form>
+
+            <p style="margin-bottom: 30px;">
+                Once again, thank you for visiting our website and reviewing this project. Your support and engagement
+                are highly valued, and we hope this demonstration provides a clear understanding of how a complete
+                online shopping and payment system functions.
+            </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
+            <a href="{% url 'home' %}" class="btn btn-primary" style="padding: 12px 30px;">Back to Home</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

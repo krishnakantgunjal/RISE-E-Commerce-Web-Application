@@ -1,0 +1,267 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="cart-container">
+
+    <div class="cart-header" style="margin-bottom: 30px;">
+        <h1>📦 Order Details</h1>
+        <p>Track your order and view details</p>
+    </div>
+
+    <!-- Order Status Timeline -->
+    <div class="order-timeline"
+        style="background: white; border-radius: var(--radius-lg); padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-md);">
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">Order Status</h2>
+
+        <div class="status-timeline">
+            <div
+                class="timeline-item {% if order.status == 'pending' %}active{% endif %} {% if order.status in 'processing,shipped,delivered' %}completed{% endif %}">
+                <div class="timeline-icon">📝</div>
+                <div class="timeline-content">
+                    <strong>Order Placed</strong>
+                    <p>{{ order.created_at|date:"M d, Y - h:i A" }}</p>
+                </div>
+            </div>
+
+            <div
+                class="timeline-item {% if order.status == 'processing' %}active{% endif %} {% if order.status in 'shipped,delivered' %}completed{% endif %}">
+                <div class="timeline-icon">⚙️</div>
+                <div class="timeline-content">
+                    <strong>Processing</strong>
+                    <p>{% if order.status in 'processing,shipped,delivered' %}In Progress{% else %}Pending{% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="timeline-item {% if order.status == 'shipped' %}active{% endif %} {% if order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-icon">🚚</div>
+                <div class="timeline-content">
+                    <strong>Shipped</strong>
+                    <p>{% if order.status in 'shipped,delivered' %}On the way{% else %}Not Yet{% endif %}</p>
+                </div>
+            </div>
+
+            <div class="timeline-item {% if order.status == 'delivered' %}active completed{% endif %}">
+                <div class="timeline-icon">✅</div>
+                <div class="timeline-content">
+                    <strong>Delivered</strong>
+                    <p>{% if order.status == 'delivered' %}Completed{% else %}Pending{% endif %}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if order.status == 'cancelled' %}
+        <div
+            style="margin-top: 20px; padding: 15px; background: #fee2e2; border-left: 4px solid #dc2626; border-radius: var(--radius-md);">
+            <strong style="color: #dc2626;">❌ Order Cancelled</strong>
+            <p style="color: #7f1d1d; margin-top: 5px; font-size: 14px;">This order has been cancelled.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="cart-content">
+        <!-- Order Information -->
+        <div class="cart-items">
+            <!-- Order Summary Card -->
+            <div class="checkout-form">
+                <h2>📋 Order Summary</h2>
+
+                <div style="margin-top: 20px;">
+                    <div
+                        style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-secondary); font-weight: 600;">Order ID</span>
+                        <span style="font-weight: 800; color: var(--brand-primary);">#{{ order.id }}</span>
+                    </div>
+
+                    <div
+                        style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-secondary); font-weight: 600;">Order Date</span>
+                        <span style="font-weight: 700;">{{ order.created_at|date:"M d, Y" }}</span>
+                    </div>
+
+                    <div
+                        style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-secondary); font-weight: 600;">Status</span>
+                        <span style="font-weight: 700; text-transform: capitalize; 
+                            {% if order.status == 'delivered' %}color: var(--accent-green);
+                            {% elif order.status == 'cancelled' %}color: #dc2626;
+                            {% elif order.status == 'shipped' %}color: #2196f3;
+                            {% else %}color: #ffc107;{% endif %}">
+                            {{ order.status }}
+                        </span>
+                    </div>
+
+                    <div
+                        style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-secondary); font-weight: 600;">Payment Status</span>
+                        <span style="font-weight: 700; text-transform: capitalize;
+                            {% if order.payment_status == 'completed' %}color: var(--accent-green);
+                            {% else %}color: #ffc107;{% endif %}">
+                            {{ order.payment_status|title }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Information -->
+            <div class="checkout-form" style="margin-top: 20px;">
+                <h2>🏠 Delivery Information</h2>
+
+                <div style="margin-top: 15px;">
+                    <p style="margin-bottom: 8px;"><strong>Name:</strong> {{ order.full_name }}</p>
+                    <p style="margin-bottom: 8px;"><strong>Phone:</strong> {{ order.phone }}</p>
+                    <p style="margin-bottom: 8px;"><strong>Address:</strong> {{ order.address }}</p>
+                </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="checkout-form" style="margin-top: 20px;">
+                <h2>🛍️ Order Items</h2>
+
+                {% for item in order.items.all %}
+                <div class="cart-item"
+                    style="margin: 15px 0; padding: 15px; background: #f8fafc; border-radius: var(--radius-md);">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                        style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-md);">
+
+                    <div style="flex: 1; margin-left: 15px;">
+                        <h3 style="font-size: 18px; margin-bottom: 10px; font-weight: 700;">{{ item.product.name }}</h3>
+
+                        <div
+                            style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; color: var(--text-secondary); font-size: 14px;">
+                            <span><strong>Unit Price:</strong></span>
+                            <span>₹{{ item.price|floatformat:2 }}</span>
+
+                            <span><strong>Quantity:</strong></span>
+                            <span>{{ item.quantity }}</span>
+
+                            <span><strong>Calculation:</strong></span>
+                            <span style="color: var(--brand-primary); font-weight: 600;">₹{{ item.price|floatformat:2 }}
+                                × {{ item.quantity }} = ₹{{ item.subtotal|floatformat:2 }}</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; padding-left: 20px; border-left: 2px solid var(--border-color);">
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 5px; font-weight: 600;">
+                            Subtotal</p>
+                        <p style="font-size: 24px; font-weight: 900; color: var(--brand-primary);">₹{{ item.subtotal|floatformat:2 }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Order Actions -->
+        <div class="cart-summary">
+            <h2>Order Total</h2>
+
+            <div class="summary-row total">
+                <span class="summary-label">Total Amount</span>
+                <span class="summary-value">₹{{ order.total_amount|floatformat:2 }}</span>
+            </div>
+
+            <div style="margin-top: 30px;">
+                {% if order.status == 'pending' %}
+                <form method="POST" action="{% url 'orders:cancel_order' order.id %}"
+                    onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline checkout-btn"
+                        style="background: #fee2e2; color: #dc2626; border-color: #dc2626;">
+                        ❌ Cancel Order
+                    </button>
+                </form>
+                {% endif %}
+
+                <a href="{% url 'orders:my_orders' %}" class="btn btn-outline checkout-btn">
+                    ← Back to Orders
+                </a>
+
+                <a href="{% url 'home' %}" class="btn btn-primary checkout-btn">
+                    Continue Shopping
+                </a>
+            </div>
+
+            <div
+                style="margin-top: 20px; padding: 15px; background: #e7f3ff; border-left: 4px solid #2196f3; border-radius: 4px; font-size: 13px;">
+                <strong>💡 Note:</strong><br>
+                {% if order.status == 'pending' %}
+                You can cancel this order while it's pending. Once processing starts, cancellation won't be possible.
+                {% elif order.status == 'delivered' %}
+                Your order has been delivered. Thank you for shopping with us!
+                {% else %}
+                Your order is being {{ order.status }}. We'll keep you updated!
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Order Timeline Styles */
+    .status-timeline {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .status-timeline::before {
+        content: '';
+        position: absolute;
+        top: 45px;
+        left: 40px;
+        right: 40px;
+        height: 3px;
+        background: #e2e8f0;
+        z-index: 0;
+    }
+
+    .timeline-item {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .timeline-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        border: 3px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 10px;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-item.active .timeline-icon {
+        background: #fff7ed;
+        border-color: #ffc107;
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px #fff7ed;
+    }
+
+    .timeline-item.completed .timeline-icon {
+        background: #dcfce7;
+        border-color: var(--accent-green);
+    }
+
+    .timeline-content strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+    }
+
+    .timeline-content p {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+</style>
+{% endblock %}

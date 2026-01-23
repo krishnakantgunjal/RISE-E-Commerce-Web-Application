@@ -1,0 +1,129 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-container">
+
+    <!-- Page Header -->
+    <div style="margin-bottom: 30px;">
+        <h1 class="page-title">All Products</h1>
+        <p style="color: var(--text-secondary); font-size: 16px;">
+            Showing {{ total_products }} product{{ total_products|pluralize }}
+            {% if search_query %} for "{{ search_query }}"{% endif %}
+            {% if selected_category %} in {{ selected_category.name }}{% endif %}
+        </p>
+    </div>
+
+    <!-- Filters & Search Bar -->
+    <div class="filter-bar">
+        <!-- Search -->
+        <form method="GET" class="search-box" style="display: flex; gap: 8px;">
+            <input type="text" name="search" placeholder="Search products..." value="{{ search_query }}"
+                style="flex: 1; padding: 12px 18px; border: 2px solid var(--border-color); border-radius: var(--radius-md); font-size: 15px;">
+            <button type="submit" class="btn btn-primary" style="padding: 12px 24px;">Search</button>
+            {% if search_query or selected_category or price_range or in_stock %}
+            <a href="{% url 'products_list' %}" class="btn btn-outline">Clear All</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Filter Pills -->
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0;">
+        <!-- Category Filter -->
+        <div style="position: relative;">
+            <select name="category" onchange="applyFilter('category', this.value)" class="filter-select">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                <option value="{{ category.slug }}" {% if selected_category.slug==category.slug %}selected{% endif %}>{{
+                    category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Price Filter -->
+        <select name="price" onchange="applyFilter('price', this.value)" class="filter-select">
+            <option value="">All Prices</option>
+            <option value="under-1000" {% if price_range=='under-1000' %}selected{% endif %}>Under ₹1,000</option>
+            <option value="1000-3000" {% if price_range=='1000-3000' %}selected{% endif %}>₹1,000 - ₹3,000</option>
+            <option value="3000-5000" {% if price_range=='3000-5000' %}selected{% endif %}>₹3,000 - ₹5,000</option>
+            <option value="above-5000" {% if price_range=='above-5000' %}selected{% endif %}>Above ₹5,000</option>
+        </select>
+
+        <!-- Sort By -->
+        <select name="sort" onchange="applyFilter('sort', this.value)" class="filter-select">
+            <option value="newest" {% if sort_by=='newest' %}selected{% endif %}>Newest First</option>
+            <option value="price-low" {% if sort_by=='price-low' %}selected{% endif %}>Price: Low to High</option>
+            <option value="price-high" {% if sort_by=='price-high' %}selected{% endif %}>Price: High to Low</option>
+            <option value="name" {% if sort_by=='name' %}selected{% endif %}>Name: A-Z</option>
+        </select>
+
+        <!-- Stock Filter -->
+        <select name="in_stock" onchange="applyFilter('in_stock', this.value)" class="filter-select">
+            <option value="">All Products</option>
+            <option value="yes" {% if in_stock=='yes' %}selected{% endif %}>In Stock Only</option>
+        </select>
+    </div>
+
+    <!-- Products Grid -->
+    {% if products %}
+    <div class="product-grid" id="products">
+        {% for product in products %}
+        <div class="product-card animate-fade-in">
+            <a href="{% url 'product_detail' product.slug %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+            </a>
+
+            {% if product.stock == 0 %}
+            <div class="badge" style="background: #dc2626;">Out of Stock</div>
+            {% elif product.is_low_stock %}
+            <div class="badge" style="background: #ffc107;">Low Stock</div>
+            {% endif %}
+
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p class="price">₹{{ product.price }}</p>
+
+                <div class="product-buttons">
+                    <a class="btn btn-outline" href="{% url 'product_detail' product.slug %}">
+                        View Details
+                    </a>
+
+                    {% if product.stock > 0 %}
+                    <a class="btn btn-primary" href="{% url 'cart:cart_add' product.id %}">
+                        Add to Cart
+                    </a>
+                    {% else %}
+                    <button class="btn btn-outline" disabled style="opacity: 0.5; cursor: not-allowed;">
+                        Out of Stock
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p style="font-size: 60px; margin-bottom: 20px;">🔍</p>
+        <h2>No products found</h2>
+        <p>Try adjusting your filters or search query</p>
+        <a href="{% url 'products_list' %}" class="btn btn-primary" style="margin-top: 20px;">Clear Filters</a>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+    function applyFilter(param, value) {
+        const url = new URL(window.location);
+
+        if (value) {
+            url.searchParams.set(param, value);
+        } else {
+            url.searchParams.delete(param);
+        }
+
+        window.location.href = url.toString();
+    }
+</script>
+{% endblock %}
