@@ -11,8 +11,16 @@ from decimal import Decimal
 
 
 def home(request):
-    products = Product.objects.filter(is_available=True)
-    return render(request, "store/home.html", {"products": products})
+    # Smart Trending: Best Sellers -> High Rated -> Newest
+    products = Product.objects.filter(is_available=True).annotate(
+        total_sales=Sum('orderitem__quantity')
+    ).order_by('-total_sales', '-created_at')[:8]
+    categories = Category.objects.all()
+    context = {
+        "products": products,
+        "categories": categories
+    }
+    return render(request, "store/home.html", context)
 
 
 def product_detail(request, slug):
@@ -77,16 +85,14 @@ def products_list(request):
         selected_category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=selected_category)
     
-    # Price filter
+    # Price filter (Premium Ranges)
     price_range = request.GET.get('price', '')
-    if price_range == 'under-1000':
-        products = products.filter(price__lt=1000)
-    elif price_range == '1000-3000':
-        products = products.filter(price__gte=1000, price__lt=3000)
-    elif price_range == '3000-5000':
-        products = products.filter(price__gte=3000, price__lt=5000)
-    elif price_range == 'above-5000':
-        products = products.filter(price__gte=5000)
+    if price_range == 'under-5000':
+        products = products.filter(price__lt=5000)
+    elif price_range == '5000-10000':
+        products = products.filter(price__gte=5000, price__lt=10000)
+    elif price_range == 'above-10000':
+        products = products.filter(price__gte=10000)
     
     # Sorting
     sort_by = request.GET.get('sort', 'newest')

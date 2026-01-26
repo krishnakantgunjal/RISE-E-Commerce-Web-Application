@@ -32,10 +32,13 @@
         <!-- Category Filter -->
         <div style="position: relative;">
             <select name="category" onchange="applyFilter('category', this.value)" class="filter-select">
-                <option value="">All Categories</option>
+                <option value="">All Collections</option>
                 {% for category in categories %}
-                <option value="{{ category.slug }}" {% if selected_category.slug==category.slug %}selected{% endif %}>{{
-                    category.name }}</option>
+                {% if selected_category and selected_category.slug == category.slug %}
+                <option value="{{ category.slug }}" selected>{{ category.name }}</option>
+                {% else %}
+                <option value="{{ category.slug }}">{{ category.name }}</option>
+                {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -43,24 +46,31 @@
         <!-- Price Filter -->
         <select name="price" onchange="applyFilter('price', this.value)" class="filter-select">
             <option value="">All Prices</option>
-            <option value="under-1000" {% if price_range=='under-1000' %}selected{% endif %}>Under ₹1,000</option>
-            <option value="1000-3000" {% if price_range=='1000-3000' %}selected{% endif %}>₹1,000 - ₹3,000</option>
-            <option value="3000-5000" {% if price_range=='3000-5000' %}selected{% endif %}>₹3,000 - ₹5,000</option>
-            <option value="above-5000" {% if price_range=='above-5000' %}selected{% endif %}>Above ₹5,000</option>
+            {% if price_range == 'under-5000' %}<option value="under-5000" selected>Under ₹5,000</option>{% else %}
+            <option value="under-5000">Under ₹5,000</option>{% endif %}
+            {% if price_range == '5000-10000' %}<option value="5000-10000" selected>₹5,000 - ₹10,000</option>{% else %}
+            <option value="5000-10000">₹5,000 - ₹10,000</option>{% endif %}
+            {% if price_range == 'above-10000' %}<option value="above-10000" selected>Above ₹10,000</option>{% else %}
+            <option value="above-10000">Above ₹10,000</option>{% endif %}
         </select>
 
         <!-- Sort By -->
         <select name="sort" onchange="applyFilter('sort', this.value)" class="filter-select">
-            <option value="newest" {% if sort_by=='newest' %}selected{% endif %}>Newest First</option>
-            <option value="price-low" {% if sort_by=='price-low' %}selected{% endif %}>Price: Low to High</option>
-            <option value="price-high" {% if sort_by=='price-high' %}selected{% endif %}>Price: High to Low</option>
-            <option value="name" {% if sort_by=='name' %}selected{% endif %}>Name: A-Z</option>
+            {% if sort_by == 'newest' %}<option value="newest" selected>Newest First</option>{% else %}<option
+                value="newest">Newest First</option>{% endif %}
+            {% if sort_by == 'price-low' %}<option value="price-low" selected>Price: Low to High</option>{% else %}
+            <option value="price-low">Price: Low to High</option>{% endif %}
+            {% if sort_by == 'price-high' %}<option value="price-high" selected>Price: High to Low</option>{% else %}
+            <option value="price-high">Price: High to Low</option>{% endif %}
+            {% if sort_by == 'name' %}<option value="name" selected>Name: A-Z</option>{% else %}<option value="name">
+                Name: A-Z</option>{% endif %}
         </select>
 
         <!-- Stock Filter -->
         <select name="in_stock" onchange="applyFilter('in_stock', this.value)" class="filter-select">
             <option value="">All Products</option>
-            <option value="yes" {% if in_stock=='yes' %}selected{% endif %}>In Stock Only</option>
+            {% if in_stock == 'yes' %}<option value="yes" selected>In Stock Only</option>{% else %}<option value="yes">
+                In Stock Only</option>{% endif %}
         </select>
     </div>
 

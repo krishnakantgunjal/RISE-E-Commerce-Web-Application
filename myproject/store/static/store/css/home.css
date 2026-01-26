@@ -59,16 +59,22 @@
   font-size: 56px;
   font-weight: 900;
   margin-bottom: 16px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  /* Explicitly white */
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  /* Stronger shadow */
   animation: fadeInUp 0.8s ease;
 }
 
 .banner-subtitle {
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 600;
+  /* Increased weight */
   margin-bottom: 30px;
-  opacity: 0.95;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  color: #f0f0f0;
+  /* Slightly off-white for hierarchy */
+  opacity: 1;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
   animation: fadeInUp 1s ease 0.2s backwards;
 }
 
