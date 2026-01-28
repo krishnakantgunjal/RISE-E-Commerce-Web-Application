@@ -1,21 +1,27 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
+User = get_user_model()
+
 class Command(BaseCommand):
-    help = "Create default superuser if not exists"
+    help = "Create or reset admin user"
 
     def handle(self, *args, **kwargs):
-        User = get_user_model()
         username = "krish"
         email = "krish@example.com"
         password = "12345678"
 
-        if User.objects.filter(username=username).exists():
-            self.stdout.write("Superuser already exists")
+        user, created = User.objects.get_or_create(
+            username=username,
+            defaults={"email": email},
+        )
+
+        user.set_password(password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+
+        if created:
+            self.stdout.write(self.style.SUCCESS("Admin user created"))
         else:
-            User.objects.create_superuser(
-                username=username,
-                email=email,
-                password=password
-            )
-            self.stdout.write("Superuser created successfully")
+            self.stdout.write(self.style.SUCCESS("Admin password reset"))
