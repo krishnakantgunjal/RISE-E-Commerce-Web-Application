@@ -14,3 +14,9 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
 
 application = get_wsgi_application()
+
+try:
+    from create_superuser import create_superuser
+    create_superuser()
+except Exception as e:
+    print("Superuser already exists or failed:", e)
