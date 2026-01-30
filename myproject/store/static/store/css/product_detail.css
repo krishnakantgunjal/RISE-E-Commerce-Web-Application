@@ -21,13 +21,12 @@
 
 .product-image img {
     width: 100%;
-    height: auto;
-    max-height: 600px;
-    object-fit: contain;
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     background: white;
-    padding: 30px;
 }
 
 .no-image {

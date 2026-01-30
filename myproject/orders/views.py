@@ -10,6 +10,7 @@ from accounts.models import UserProfile
 from .models import Order, OrderItem
 
 
+@login_required(login_url='accounts:login')
 def checkout(request):
     cart = request.session.get("cart", {})
     

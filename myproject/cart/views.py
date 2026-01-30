@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from store.models import Product
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def get_cart_total(cart):
@@ -40,6 +41,7 @@ def cart_detail(request):
     return render(request, "cart/cart_detail.html", {"cart_items": cart_items, "total": total})
 
 
+@login_required(login_url='accounts:login')
 def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -93,6 +95,7 @@ def cart_add(request, product_id):
     return redirect("cart:cart_detail")
 
 
+@login_required(login_url='accounts:login')
 def cart_decrement(request, product_id):
     cart = request.session.get("cart", {})
     product_id_str = str(product_id)
@@ -135,6 +138,7 @@ def cart_decrement(request, product_id):
     return redirect(request.META.get('HTTP_REFERER', 'cart:cart_detail'))
 
 
+@login_required(login_url='accounts:login')
 def cart_remove(request, product_id):
     cart = request.session.get("cart", {})
 
