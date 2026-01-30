@@ -65,7 +65,7 @@
                 <div
                     style="width: 250px; height: 250px; margin: 0 auto; background: white; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; position: relative;">
                     <!-- Real QR Code -->
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=http://127.0.0.1:8000/thanks-visiting/{{ order.id }}/"
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data={{ request.scheme }}://{{ request.get_host }}{% url 'orders:thanks_visiting' order.id %}"
                         alt="Scan to Pay" style="width: 230px; height: 230px;">
                 </div>
 
