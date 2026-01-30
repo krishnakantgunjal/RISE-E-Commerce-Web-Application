@@ -11,10 +11,10 @@ from decimal import Decimal
 
 
 def home(request):
-    # Smart Trending: Best Sellers -> High Rated -> Newest
+    # Smart Trending: Best Sellers -> Newest (Top 6)
     products = Product.objects.filter(is_available=True).annotate(
         total_sales=Sum('orderitem__quantity')
-    ).order_by('-total_sales', '-created_at')[:8]
+    ).order_by('-total_sales', '-created_at')[:6]
     categories = Category.objects.all()
     context = {
         "products": products,
