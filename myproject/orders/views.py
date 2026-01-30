@@ -196,9 +196,18 @@ def payment_page(request, order_id):
 
 def process_payment(request, order_id):
     """Process demo payment and complete order"""
+    # Only allow POST requests
+    if request.method != 'POST':
+        return redirect('orders:payment_page', order_id=order_id)
+    
     order = get_object_or_404(Order, id=order_id)
     
-    if request.method == 'POST':
+    # Prevent duplicate payment processing
+    if order.payment_status == 'completed':
+        messages.info(request, 'This order has already been paid.')
+        return redirect('orders:order_success', order_id=order.id)
+    
+    try:
         # Update order status
         order.payment_status = 'completed'
         order.status = 'processing'
@@ -208,13 +217,22 @@ def process_payment(request, order_id):
         for item in order.items.all():
             item.product.reduce_stock(item.quantity)
         
-        # Clear cart
-        request.session["cart"] = {}
+        # Safely clear cart
+        request.session.pop('cart', None)
         request.session.modified = True
         
+        messages.success(request, 'Payment completed successfully!')
         return redirect('orders:order_success', order_id=order.id)
-    
-    return redirect('orders:payment_page', order_id=order.id)
+        
+    except ValueError as e:
+        # Stock reduction failed
+        messages.error(request, f'Payment processing error: {str(e)}')
+        return redirect('orders:payment_page', order_id=order.id)
+    except Exception as e:
+        # Any other error
+        messages.error(request, 'An error occurred while processing your payment. Please try again.')
+        return redirect('orders:payment_page', order_id=order.id)
+
 
 def thanks_visiting(request, order_id):
     """Render the thank you/project demonstration page"""

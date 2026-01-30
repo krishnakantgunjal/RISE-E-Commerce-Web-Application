@@ -70,6 +70,24 @@ class Product(models.Model):
         """Get total number of reviews"""
         return self.reviews.count()
 
+    def reduce_stock(self, quantity):
+        """Reduce stock after successful payment"""
+        if self.stock >= quantity:
+            self.stock -= quantity
+            if self.stock == 0:
+                self.is_available = False
+            self.save()
+        else:
+            raise ValueError(f"Insufficient stock for {self.name}")
+
+    def increase_stock(self, quantity):
+        """Increase stock (e.g., when order is cancelled)"""
+        self.stock += quantity
+        if self.stock > 0:
+            self.is_available = True
+        self.save()
+
+
 
 class Review(models.Model):
     RATING_CHOICES = [
