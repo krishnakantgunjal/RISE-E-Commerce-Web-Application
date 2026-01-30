@@ -151,7 +151,11 @@
             {% for related in related_products %}
             <div class="product-card">
                 <a href="{% url 'product_detail' related.slug %}">
+                    {% if related.image %}
                     <img src="{{ related.image.url }}" alt="{{ related.name }}" class="product-img">
+                    {% else %}
+                    <div class="no-image">No Image</div>
+                    {% endif %}
                 </a>
 
                 <div class="product-info">

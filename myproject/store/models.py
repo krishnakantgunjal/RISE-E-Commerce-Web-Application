@@ -53,6 +53,23 @@ class Product(models.Model):
         return format_html('<span style="color: gray;">No Image</span>')
     admin_thumbnail.short_description = 'Preview'
 
+    @property
+    def is_low_stock(self):
+        """Check if product has low stock (less than 10 units)"""
+        return 0 < self.stock < 10
+
+    def get_average_rating(self):
+        """Calculate average rating from reviews"""
+        reviews = self.reviews.all()
+        if reviews:
+            total = sum(review.rating for review in reviews)
+            return round(total / len(reviews), 1)
+        return 0
+
+    def get_review_count(self):
+        """Get total number of reviews"""
+        return self.reviews.count()
+
 
 class Review(models.Model):
     RATING_CHOICES = [
