@@ -1,0 +1,130 @@
+/* ==============================
+   RISE - Footer Styles
+   Professional & Minimal Design
+================================= */
+
+.site-footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    margin-top: 80px;
+    padding: 50px 0 0;
+}
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+}
+
+/* Footer Sections */
+.footer-section h3 {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+}
+
+.footer-section p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 0;
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: #6366f1;
+    transform: translateX(4px);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #94a3b8;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-footer {
+        margin-top: 60px;
+        padding: 40px 0 0;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 20px 30px;
+    }
+
+    .footer-section h3 {
+        font-size: 24px;
+    }
+
+    .footer-section h4 {
+        font-size: 16px;
+    }
+
+    .footer-section p {
+        font-size: 14px;
+    }
+
+    .footer-links a {
+        font-size: 14px;
+    }
+
+    .footer-bottom {
+        font-size: 13px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-footer {
+        margin-top: 40px;
+    }
+
+    .footer-container {
+        gap: 30px;
+        padding: 0 16px 24px;
+    }
+
+    .footer-section h3 {
+        font-size: 20px;
+    }
+}

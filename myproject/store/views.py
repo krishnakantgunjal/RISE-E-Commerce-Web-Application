@@ -23,6 +23,11 @@ def home(request):
     return render(request, "store/home.html", context)
 
 
+def about(request):
+    """About page view"""
+    return render(request, "store/about.html")
+
+
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_available=True)
     # Get related products from same category

@@ -1,0 +1,238 @@
+/* ==============================
+   RISE - About Page Styles
+   Professional & Clean Design
+================================= */
+
+.about-section {
+    padding: 60px 0;
+    background: var(--bg-primary);
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* About Image */
+.about-image {
+    position: sticky;
+    top: 120px;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    object-fit: cover;
+    aspect-ratio: 3/4;
+}
+
+/* About Content */
+.about-content {
+    background: var(--bg-secondary);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.about-content h1 {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.about-content h4 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-top: 30px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--brand-primary);
+}
+
+/* About Intro */
+.about-intro {
+    margin-bottom: 30px;
+}
+
+.about-intro p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.about-intro strong {
+    color: var(--brand-primary);
+    font-weight: 700;
+}
+
+/* Education Section */
+.about-education ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-education li {
+    padding: 16px;
+    margin-bottom: 12px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--brand-primary);
+    line-height: 1.6;
+}
+
+.about-education li strong {
+    font-size: 18px;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.about-education li br {
+    margin-bottom: 4px;
+}
+
+/* Contact Section */
+.about-contact p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.about-contact a {
+    color: var(--brand-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+
+.about-contact a:hover {
+    color: var(--brand-secondary);
+    text-decoration: underline;
+}
+
+/* Social Links */
+.about-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: var(--brand-gradient);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 15px;
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-image {
+        position: static;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .about-content {
+        padding: 30px;
+    }
+
+    .about-content h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        padding: 40px 0;
+    }
+
+    .about-container {
+        gap: 30px;
+    }
+
+    .about-image {
+        max-width: 300px;
+    }
+
+    .about-content {
+        padding: 24px;
+    }
+
+    .about-content h1 {
+        font-size: 28px;
+    }
+
+    .about-content h3 {
+        font-size: 18px;
+    }
+
+    .about-content h4 {
+        font-size: 20px;
+    }
+
+    .about-intro p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-content {
+        padding: 20px;
+    }
+
+    .about-content h1 {
+        font-size: 24px;
+    }
+
+    .about-content h3 {
+        font-size: 16px;
+    }
+
+    .about-links {
+        flex-direction: column;
+    }
+
+    .social-link {
+        width: 100%;
+        justify-content: center;
+    }
+}
