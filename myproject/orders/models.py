@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from store.models import Product
+from django.utils import timezone
 
 
 class Order(models.Model):
@@ -18,9 +19,9 @@ class Order(models.Model):
         ('failed', 'Failed'),
     ]
     
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     full_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254, blank=True, null=True)  # Added email field
+    email = models.EmailField(max_length=254, blank=True, null=True)
     phone = models.CharField(max_length=15)
     
     # Detailed Address Fields
@@ -37,7 +38,22 @@ class Order(models.Model):
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    
+    # Timeline Fields (Professional Feature)
     created_at = models.DateTimeField(auto_now_add=True)
+    paid_at = models.DateTimeField(null=True, blank=True, verbose_name="Payment Completed At")
+    shipped_at = models.DateTimeField(null=True, blank=True, verbose_name="Shipped At")
+    delivered_at = models.DateTimeField(null=True, blank=True, verbose_name="Delivered At")
+    
+    # Audit Field
+    updated_by = models.ForeignKey(
+        User, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='updated_orders',
+        verbose_name="Last Updated By"
+    )
 
     def update_total(self):
         total = 0
@@ -45,6 +61,28 @@ class Order(models.Model):
             total += item.subtotal
         self.total_amount = total
         self.save()
+    
+    def save(self, *args, **kwargs):
+        """Auto-update timeline fields based on status changes"""
+        if self.pk:  # Existing order
+            old_order = Order.objects.get(pk=self.pk)
+            
+            # Track payment completion
+            if old_order.payment_status != 'completed' and self.payment_status == 'completed':
+                if not self.paid_at:
+                    self.paid_at = timezone.now()
+            
+            # Track shipping
+            if old_order.status != 'shipped' and self.status == 'shipped':
+                if not self.shipped_at:
+                    self.shipped_at = timezone.now()
+            
+            # Track delivery
+            if old_order.status != 'delivered' and self.status == 'delivered':
+                if not self.delivered_at:
+                    self.delivered_at = timezone.now()
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Order #{self.id} - {self.full_name}"
