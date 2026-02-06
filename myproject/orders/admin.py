@@ -352,37 +352,14 @@ class OrderAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-@admin.register(OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'order_link', 'product', 'quantity', 'price', 'subtotal_display']
-    list_filter = ['order__created_at', 'order__status']
-    search_fields = ['order__id', 'product__name']
-    readonly_fields = ['order', 'product', 'quantity', 'price', 'subtotal']
-    
-    def order_link(self, obj):
-        """Display clickable order ID"""
-        return format_html(
-            '<a href="/admin/orders/order/{}/change/">Order #{}</a>',
-            obj.order.id,
-            obj.order.id
-        )
-    order_link.short_description = 'Order'
-    
-    def subtotal_display(self, obj):
-        """Display formatted subtotal"""
-        return format_html(
-            '<strong>₹{:,.2f}</strong>',
-            obj.subtotal
-        )
-    subtotal_display.short_description = 'Subtotal'
-    
-    def has_add_permission(self, request):
-        """Prevent manual creation of order items"""
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
-        """Prevent deletion of order items"""
-        return False
+# OrderItem is intentionally NOT registered as a standalone admin model.
+# It should only be managed through OrderItemInline within OrderAdmin.
+# This prevents:
+#   - Accidental data corruption
+#   - Invalid order item creation outside order context
+#   - 500 errors from permission conflicts
+# 
+# To view order items, navigate to the specific Order in admin.
 
 
 # Customize admin site headers
