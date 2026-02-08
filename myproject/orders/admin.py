@@ -9,14 +9,22 @@ from .models import Order, OrderItem
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    fields = ('product', 'quantity', 'price', 'subtotal')
+    fields = ('product', 'quantity', 'price', 'subtotal_display')
+    readonly_fields = ('subtotal_display',)
     can_delete = False
+    
+    def subtotal_display(self, obj):
+        """Display calculated subtotal"""
+        if obj and obj.pk:
+            return format_html('₹{:,.2f}', obj.subtotal)
+        return '-'
+    subtotal_display.short_description = 'Subtotal'
     
     def get_readonly_fields(self, request, obj=None):
         """Lock order items after payment is completed"""
         if obj and obj.payment_status == 'completed':
-            return ('product', 'quantity', 'price', 'subtotal')
-        return ('price', 'subtotal')
+            return ('product', 'quantity', 'price', 'subtotal_display')
+        return ('price', 'subtotal_display')
     
     def has_add_permission(self, request, obj=None):
         """Prevent adding items after payment is completed"""
@@ -354,7 +362,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'quantity', 'price', 'subtotal_display']
+    list_display = ['id', 'order_link', 'product', 'quantity', 'price', 'subtotal_display']
     list_filter = ['order__created_at', 'order__status']
     search_fields = ['order__id', 'product__name']
     readonly_fields = ['order', 'product', 'quantity', 'price', 'subtotal']
