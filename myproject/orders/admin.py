@@ -354,7 +354,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['id', 'order_link', 'product', 'quantity', 'price', 'subtotal_display']
+    list_display = ['id', 'quantity', 'price', 'subtotal_display']
     list_filter = ['order__created_at', 'order__status']
     search_fields = ['order__id', 'product__name']
     readonly_fields = ['order', 'product', 'quantity', 'price', 'subtotal']
