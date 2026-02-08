@@ -37,7 +37,14 @@ class Order(models.Model):
 
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    display_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) # Renaming total_amount to avoid confusion or just keeping it
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    
+    # ✅ FIELDS FOR ADMIN
+    paid = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
     
     # Timeline Fields (Professional Feature)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -71,6 +78,7 @@ class Order(models.Model):
             if old_order.payment_status != 'completed' and self.payment_status == 'completed':
                 if not self.paid_at:
                     self.paid_at = timezone.now()
+                self.paid = True # Sync paid boolean
             
             # Track shipping
             if old_order.status != 'shipped' and self.status == 'shipped':
@@ -82,7 +90,15 @@ class Order(models.Model):
                 if not self.delivered_at:
                     self.delivered_at = timezone.now()
         
+        # Sync paid if payment_status is completed, for new orders too
+        if self.payment_status == 'completed':
+            self.paid = True
+
         super().save(*args, **kwargs)
+
+    # ✅ METHOD USED BY ADMIN
+    def total_price(self):
+        return sum(item.get_total_price() for item in self.items.all())
 
     def __str__(self):
         return f"Order #{self.id} - {self.full_name}"
@@ -96,10 +112,14 @@ class OrderItem(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def save(self, *args, **kwargs):
-        if not self.price:
+        if not self.price and self.product: # Ensure product exists
             self.price = self.product.price
         self.subtotal = self.price * self.quantity
         super().save(*args, **kwargs)
+
+    # ✅ METHOD USED BY ADMIN
+    def get_total_price(self):
+        return self.price * self.quantity
 
     def __str__(self):
         return f"{self.product.name} x {self.quantity}"
