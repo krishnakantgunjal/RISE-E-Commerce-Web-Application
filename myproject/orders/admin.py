@@ -7,42 +7,71 @@ import csv
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
+    readonly_fields = ('product', 'price', 'quantity', 'get_subtotal')
+    can_delete = False
+
+    def get_subtotal(self, obj):
+        return obj.get_total_price()
+    get_subtotal.short_description = 'Subtotal'
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'user',
-        'status',
+        'status_badge',
         'paid',
-        'paid_at',
-        'shipped_at',
-        'delivered_at',
         'get_total_price',
         'created_at',
     )
 
-    list_filter = ('paid', 'created_at')
-    search_fields = ('id', 'user__username')
+    list_filter = ('paid', 'status', 'created_at')
+    search_fields = ('id', 'user__username', 'email')
+    
     readonly_fields = (
+        'user',
+        'get_total_price',
         'paid_at',
         'shipped_at',
         'delivered_at',
         'created_at',
         'updated_at',
-        'get_total_price',
     )
     
     inlines = [OrderItemInline]
+    
+    actions = ['mark_as_paid']
 
     def get_total_price(self, obj):
         return obj.total_price()
-
     get_total_price.short_description = 'Total Price'
+    get_total_price.admin_order_field = 'total_amount' # Assumes total_amount is stored in DB for sorting
 
-    def status(self, obj):
-        return "Paid ✅" if obj.paid else "Pending ❌"
+    def status_badge(self, obj):
+        color = "orange"
+        if obj.status == "delivered":
+             color = "green"
+        elif obj.status == "shipped":
+             color = "blue"
+        elif obj.status == "cancelled":
+             color = "red"
+        elif obj.status == "processing":
+             color = "purple"
+             
+        return format_html(
+            '<strong style="color:{};">{}</strong>',
+            color,
+            obj.get_status_display()
+        )
+    status_badge.short_description = "Status"
     
+    @admin.action(description="Mark selected orders as Paid")
+    def mark_as_paid(self, request, queryset):
+        # Use timezone.now() for timezone-aware datetimes
+        from django.utils import timezone
+        updated = queryset.update(paid=True, payment_status='completed', paid_at=timezone.now())
+        self.message_user(request, f"{updated} orders marked as paid.", messages.SUCCESS)
+
     def has_delete_permission(self, request, obj=None):
         return False
 

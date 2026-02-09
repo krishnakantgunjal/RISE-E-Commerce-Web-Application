@@ -37,9 +37,6 @@ class Order(models.Model):
 
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    display_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) # Renaming total_amount to avoid confusion or just keeping it
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
     
     # ✅ FIELDS FOR ADMIN
