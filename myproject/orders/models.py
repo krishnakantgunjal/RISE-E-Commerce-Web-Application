@@ -88,11 +88,14 @@ class Order(models.Model):
                     self.delivered_at = timezone.now()
         
         # Strict sync: paid is True ONLY if payment_status is completed
+        # Strict sync: paid is True ONLY if payment_status is completed
         self.paid = (self.payment_status == 'completed')
 
         # Ensure paid_at is set if marked as paid/completed (and wasn't already set)
         if self.paid and not self.paid_at:
              self.paid_at = timezone.now()
+        elif not self.paid:
+             self.paid_at = None
 
         super().save(*args, **kwargs)
 
