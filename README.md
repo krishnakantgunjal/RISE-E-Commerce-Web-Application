@@ -45,8 +45,8 @@ This project demonstrates practical full-stack Django development, admin customi
 ## 🖼 Project Screenshots
 
 ### 🏠 Homepage
-![Homepage](project-images/Homepage (2).png)
-(project-images/Homepage (1).png)
+![Homepage](project-images/homepage.png)
+![Homepage 2](project-images/homepage1.png)
 
 ### 🛒 Shopping Cart
 ![Cart](project-images/cart.png)
@@ -55,7 +55,7 @@ This project demonstrates practical full-stack Django development, admin customi
 ![Wishlist](project-images/wishlist.png)
 
 ### 📦 My Orders
-![Orders](project-images/myorders.png)
+![Orders](project-images/my-oder.png)
 
 ### 👟 Product Page
 ![Product](project-images/shoes.png)
@@ -65,21 +65,20 @@ This project demonstrates practical full-stack Django development, admin customi
 ## 🛠 Admin Panel
 
 ### 📊 Dashboard
-![Admin Dashboard](project-images/Admin.png)
+![Admin Dashboard](project-images/dashboad.png)
 
 ### 📦 Order Management
-![Admin Order](project-images/Admin-Order.png)
+![Admin Order](project-images/admin-order.png)
 
 ### 👟 Product Management
-![Admin Product](project-images/Admin-Product.png)
+![Admin Product](project-images/admin-product.png)
 
 ### 🏷 Category Management
-![Admin Category](project-images/Admin-Category.png)
+![Admin Category](project-images/admin-category.png)
 
 ### ⭐ Review Management
-![Admin Review](project-images/Admin-Review.png)
+![Admin Review](project-images/admin-review.png)
 
----
 
 ## 🧱 Tech Stack
 
@@ -88,7 +87,6 @@ This project demonstrates practical full-stack Django development, admin customi
 | Backend | Django (Python) |
 | Database | PostgreSQL (Production) / SQLite (Development) |
 | Frontend | HTML, CSS, Bootstrap |
-| Charts | Chart.js |
 | Deployment | Render |
 | Version Control | Git & GitHub |
 
