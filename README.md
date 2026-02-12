@@ -15,7 +15,7 @@ This project demonstrates practical full-stack Django development, admin customi
 
 ---
 ## 👨‍💻 Author
-<p align="">
+<p align="center">
   <strong>Krishnakant Gunjal</strong><br><br>
   <a href="https://github.com/krishnakantgunjal">
     <img src="https://img.icons8.com/ios-glyphs/35/000000/github.png"/>
