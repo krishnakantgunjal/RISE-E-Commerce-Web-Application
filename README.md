@@ -96,17 +96,29 @@ This project demonstrates practical full-stack Django development, admin customi
 
 ## 📂 Project Structure
 
-RISE – E-Commerce Web Application
+RISE-E-Commerce-Web-Application/
 │
-├── accounts/
-├── orders/
-├── store/
-├── templates/
-├── static/
-├── project-images/
-├── manage.py
+├── myproject/                 # Main Django project folder
+│   │
+│   ├── accounts/              # User authentication & profiles
+│   ├── cart/                  # Cart functionality
+│   ├── orders/                # Order & order item management
+│   ├── payments/              # Payment status handling
+│   ├── store/                 # Products, categories, reviews
+│   ├── templates/             # HTML templates
+│   │   └── admin/             # Custom admin dashboard templates
+│   ├── media/                 # Uploaded product images
+│   ├── myproject/             # Project settings & configuration
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── db.sqlite3             # Development database
+│
+├── project-images/            # README screenshots
+├── .gitignore
 └── README.md
-
 
 ---
 
