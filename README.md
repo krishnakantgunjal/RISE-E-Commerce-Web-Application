@@ -1,4 +1,19 @@
 # 👟 RISE – E-Commerce Web Application
+## 👨‍💻 Author
+<p align="">
+  <strong>Krishnakant Gunjal</strong><br><br>
+  <a href="https://github.com/krishnakantgunjal">
+    <img src="https://img.icons8.com/ios-glyphs/35/000000/github.png"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/krishnakant-gunjal/">
+    <img src="https://img.icons8.com/ios-filled/35/0A66C2/linkedin.png"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.instagram.com/krishnakant_gunjal/?__pwa=1">
+    <img src="https://img.icons8.com/ios-filled/35/E4405F/instagram-new.png"/>
+  </a>
+</p>
 
 🔗 **Live Demo:**  
 https://rise-e-commerce-web-application.onrender.com/
@@ -121,24 +136,6 @@ This project demonstrates practical full-stack Django development, admin customi
 - Advanced Sales Reporting
 - Role-based Access Control
 - Search & Filtering Optimization
-
-## 👨‍💻 Author
-
-<p align="center">
-  <strong>Krishnakant Gunjal</strong><br><br>
-  <a href="https://github.com/krishnakantgunjal">
-    <img src="https://img.icons8.com/ios-glyphs/35/000000/github.png"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="https://www.linkedin.com/in/krishnakant-gunjal/">
-    <img src="https://img.icons8.com/ios-filled/35/0A66C2/linkedin.png"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="https://www.instagram.com/krishnakant_gunjal/?__pwa=1">
-    <img src="https://img.icons8.com/ios-filled/35/E4405F/instagram-new.png"/>
-  </a>
-</p>
-
 
 ## ⭐ Support
 
