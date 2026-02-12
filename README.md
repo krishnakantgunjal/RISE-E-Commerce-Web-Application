@@ -130,12 +130,10 @@ This project demonstrates practical full-stack Django development, admin customi
 - Payment Gateway Integration (Stripe / Razorpay)
 - Email Order Notifications
 - Coupon & Discount System
-- Product Reviews with Ratings
 - REST API Version (Django REST Framework)
 - Docker Deployment
 - Advanced Sales Reporting
 - Role-based Access Control
-- Search & Filtering Optimization
 
 ## ⭐ Support
 
