@@ -1,50 +1,107 @@
-# 🌾 RISE E-Commerce Web Application
+# 👟 RISE – E-Commerce Web Application
 
-A full-stack Django e-commerce web application with a secure admin panel, product listing, cart, checkout, and order management — built for production use.
-
-This project supports a complete shopping experience with:
-
-✔ User authentication and profile  
-✔ Product catalog & categories  
-✔ Cart and checkout workflow  
-✔ Order tracking (payment status, shipping, delivered)  
-✔ Admin panel with order management and bulk actions  
-✔ Responsive user interface
+🔗 **Live Demo:**  
+https://rise-e-commerce-web-application.onrender.com/
 
 ---
 
-## 🚀 Features
+## 📌 Project Overview
 
-### 🛒 User-Facing
-- User registration & login
-- Browse products by category
-- Add to cart & update cart
-- Checkout with order summary
-- View order history
-- Live payment status display
+**RISE** is a full-featured Django-based E-Commerce web application designed with a modern UI and production-ready backend architecture.
 
-### 🔧 Admin Panel
-- View all orders and order items
-- Inline display of order items
-- Color-coded status badges
-- Sort orders by total value
-- Bulk action: mark orders as paid
-- Read-only protected fields (no accidental overwrites)
-- Admin hosted reports & analytics (extendable)
+It includes authentication, cart system, wishlist, order tracking, payment synchronization logic, and a sales analytics dashboard.
+
+This project demonstrates real-world Django development, database integrity handling, admin customization, and cloud deployment.
 
 ---
 
-## 🧱 Tech Stack
+## ✨ Key Features
 
-| Layer | Technology |
-|-------|------------|
-| Backend | Python, Django |
-| Database | PostgreSQL (production), SQLite (local) |
-| Frontend | HTML, CSS, Bootstrap |
-| Deployment | Render (production) |
-| Version Control | Git & GitHub |
+### 👤 User Features
+- User Registration & Login
+- Browse Products by Category
+- Add to Cart
+- Wishlist System
+- Checkout Flow
+- Order History
+- Real-time Payment Status
+- Responsive Design
 
 ---
 
-## 📁 Project Structure
+### 🛠 Admin Features
+- Secure Django Admin Panel
+- Order & OrderItem Management
+- Bulk "Mark as Paid" Action
+- Automatic Payment Synchronization
+- Revenue Dashboard
+- Order Status Distribution Chart
+- Stock Monitoring
+- Read-only Protection for Critical Fields
+- Delete Disabled for Financial Records
+
+---
+
+## 🔐 Payment Integrity System
+
+This project ensures strict consistency between:
+
+- `payment_status`
+- `paid` boolean
+- `paid_at` timestamp
+
+### Rules Implemented:
+- `paid = True` ONLY when `payment_status = "completed"`
+- `paid_at` automatically set when payment is completed
+- `paid_at` cleared if payment reverts
+- Bulk admin updates handled atomically
+- No mismatch possible between frontend and admin
+
+---
+
+## 🖼 Project Screenshots
+
+### 🏠 Homepage
+![Homepage](project-images/Homepage%20(1).png)
+
+### 🛒 Shopping Cart
+![Cart](project-images/cart.png)
+
+### ❤️ Wishlist
+![Wishlist](project-images/Wishlist.png)
+
+### 📦 My Orders
+![Orders](project-images/Myoder.png)
+
+### 👟 Product Page
+![Product](project-images/Shoes.png)
+
+### 📊 Admin Dashboard
+![Dashboard](project-images/Dashboad.png)
+
+---
+
+## 🧰 Tech Stack
+
+### Backend
+- Python
+- Django
+- PostgreSQL (Production)
+- SQLite (Development)
+
+### Frontend
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+
+### Deployment
+- Render
+
+### Version Control
+- Git & GitHub
+
+---
+
+## 📂 Project Structure
 
