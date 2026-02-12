@@ -122,22 +122,23 @@ This project demonstrates practical full-stack Django development, admin customi
 - Role-based Access Control
 - Search & Filtering Optimization
 
----
-
 ## 👨‍💻 Author
 
-**Krishnakant Gunjal**
+<p align="center">
+  <strong>Krishnakant Gunjal</strong><br><br>
+  <a href="https://github.com/krishnakantgunjal">
+    <img src="https://img.icons8.com/ios-glyphs/35/000000/github.png"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/krishnakant-gunjal/">
+    <img src="https://img.icons8.com/ios-filled/35/0A66C2/linkedin.png"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.instagram.com/krishnakant_gunjal/?__pwa=1">
+    <img src="https://img.icons8.com/ios-filled/35/E4405F/instagram-new.png"/>
+  </a>
+</p>
 
-GitHub:  
-https://github.com/krishnakantgunjal  
-
-LinkedIn:  
-https://www.linkedin.com/in/krishnakant-gunjal/
-
-Instagram:  
-https://www.instagram.com/krishnakant_gunjal/?__pwa=1
-
----
 
 ## ⭐ Support
 
