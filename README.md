@@ -45,8 +45,8 @@ This project demonstrates practical full-stack Django development, admin customi
 ## 🖼 Project Screenshots
 
 ### 🏠 Homepage
-![Homepage](project-images/Homepage.png)
-![Homepage 2](project-images/Homepage1.png)
+![Homepage](project-images/homepage.png)
+![Homepage 2](project-images/homepage1.png)
 
 ### 🛒 Shopping Cart
 ![Cart](project-images/cart.png)
