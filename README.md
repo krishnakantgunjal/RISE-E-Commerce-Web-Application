@@ -45,39 +45,39 @@ This project demonstrates practical full-stack Django development, admin customi
 ## 🖼 Project Screenshots
 
 ### 🏠 Homepage
-![Homepage](project-images/homepage.png)
-![Homepage 2](project-images/homepage1.png)
+![Homepage](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/homepage.png)
+![Homepage 2](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/homepage1.png)
 
 ### 🛒 Shopping Cart
-![Cart](project-images/cart.png)
+![Cart](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/cart.png)
 
 ### ❤️ Wishlist
-![Wishlist](project-images/wishlist.png)
+![Wishlist](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/wishlist.png)
 
 ### 📦 My Orders
-![Orders](project-images/my-oder.png)
+![Orders](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/my-oder.png)
 
 ### 👟 Product Page
-![Product](project-images/shoes.png)
+![Product](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/shoes.png)
 
 ---
 
 ## 🛠 Admin Panel
 
 ### 📊 Dashboard
-![Admin Dashboard](project-images/dashboad.png)
+![Admin Dashboard](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/dashboad.png)
 
 ### 📦 Order Management
-![Admin Order](project-images/admin-order.png)
+![Admin Order](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/admin-order.png)
 
 ### 👟 Product Management
-![Admin Product](project-images/admin-product.png)
+![Admin Product](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/admin-product.png)
 
 ### 🏷 Category Management
-![Admin Category](project-images/admin-category.png)
+![Admin Category](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/admin-category.png)
 
 ### ⭐ Review Management
-![Admin Review](project-images/admin-review.png)
+![Admin Review](https://raw.githubusercontent.com/krishnakantgunjal/RISE-E-Commerce-Web-Application/main/project-images/admin-review.png)
 
 
 ## 🧱 Tech Stack
